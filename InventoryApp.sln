@@ -9,10 +9,16 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "InventoryApp.Client", "inve
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ED601909-CD15-4E0E-92EF-49A4BD969737}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		LICENSE = LICENSE
+		Migrations.txt = Migrations.txt
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryApp.Data", "InventoryApp.Data\InventoryApp.Data.csproj", "{17D2C334-CCBE-4D93-8105-DEE0814D389D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryApp.Common", "InventoryApp.Common\InventoryApp.Common.csproj", "{C81058F5-796E-4141-A451-B665C47CEAB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +36,14 @@ Global
 		{FD1043FC-88E9-40DF-9563-653C1D766045}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD1043FC-88E9-40DF-9563-653C1D766045}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD1043FC-88E9-40DF-9563-653C1D766045}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{17D2C334-CCBE-4D93-8105-DEE0814D389D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D2C334-CCBE-4D93-8105-DEE0814D389D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D2C334-CCBE-4D93-8105-DEE0814D389D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D2C334-CCBE-4D93-8105-DEE0814D389D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C81058F5-796E-4141-A451-B665C47CEAB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C81058F5-796E-4141-A451-B665C47CEAB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C81058F5-796E-4141-A451-B665C47CEAB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C81058F5-796E-4141-A451-B665C47CEAB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

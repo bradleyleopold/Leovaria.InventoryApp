@@ -1,0 +1,6 @@
+ 
+ # To add a new migration:
+ dotnet ef migrations add <Migration Name Here> --startup-project InventoryApp.Server --project InventoryApp.Data --context InventoryAppDbContext --output-dir Context/Migrations
+
+ # To update the SQLite database with migrations:
+dotnet ef database update --startup-project InventoryApp.Server --project InventoryApp.Data --context InventoryAppDbContext

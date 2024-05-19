@@ -1,9 +1,21 @@
+using InventoryApp.Common.Interfaces;
+using InventoryApp.Common.Services;
+using InventoryApp.Data.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
 // Add services to the container.
+builder.Services.AddDbContext<InventoryAppDbContext>(options =>
+{
+    options.UseSqlite(configuration.GetConnectionString("InventoryAppDb"),
+        x => x.MigrationsAssembly("InventoryApp.Data"));
+});
+
+builder.Services.AddTransient<IItemService, ItemService>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -13,11 +25,12 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    // Removes the "Schema" section from the Swagger page.
+    options.DefaultModelsExpandDepth(-1);
+});
 
 app.UseHttpsRedirection();
 
