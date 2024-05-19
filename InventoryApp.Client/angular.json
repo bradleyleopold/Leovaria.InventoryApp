@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "inventoryapp.client:build:production"
+              "buildTarget": "inventoryapp.client:build:production"
             },
             "development": {
-              "browserTarget": "inventoryapp.client:build:development"
+              "buildTarget": "inventoryapp.client:build:development"
             }
           },
           "defaultConfiguration": "development",
@@ -74,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "inventoryapp.client:build"
+            "buildTarget": "inventoryapp.client:build"
           }
         },
         "test": {
