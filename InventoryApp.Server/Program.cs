@@ -2,6 +2,7 @@ using InventoryApp.Common.Interfaces;
 using InventoryApp.Common.Services;
 using InventoryApp.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -17,7 +18,15 @@ builder.Services.AddTransient<IItemService, ItemService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Inventory App Api",
+        Description = "Api is used for performing necessary operations in order for the " +
+            "InventoryApp Angular UI application to work."
+    });
+});
 
 var app = builder.Build();
 
@@ -28,6 +37,7 @@ app.UseStaticFiles();
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
+    options.DocumentTitle = "Inventory App Api - Swagger";
     // Removes the "Schema" section from the Swagger page.
     options.DefaultModelsExpandDepth(-1);
 });
