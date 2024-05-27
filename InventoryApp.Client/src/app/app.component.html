@@ -1,0 +1,48 @@
+<div id="main-div">
+
+    <h1>Inventory App Demo</h1>
+    <p>
+        This application is a simple example of how to add, edit, and delete items from a table
+        using Angular, .NET 8, and a SQLite database.
+    </p>
+    <br />
+    <p-toast />
+    <p-confirmDialog />
+
+    <app-add-edit-item-modal
+        (itemAddedEvent)="itemAdded($event)"
+        (itemEditedEvent)="itemEdited($event)" />
+
+    <div class="table-container">
+        <p-button (click)="openAddItemDialog()" icon="pi pi-plus" title="Add item" [raised]="true" size="small" label="Add item" />
+
+        @if (this.displayTable) {
+        <p-table [value]="itemsList" [tableStyle]="{ 'min-width': '20rem', 'width': '100%', 'margin-top': '3px', 'border': '1px solid black' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td class="button-pane">
+                        <p-button (click)="this.openEditItemDialog(item)" icon="pi pi-pencil" title="Edit item" [raised]="true" size="small" />
+                        <p-button (click)="openItemDeleteConfirmation(item)" icon="pi pi-trash" title="Delete item" severity="danger" [raised]="true" size="small" />
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        }
+    </div>
+
+</div>
+
+

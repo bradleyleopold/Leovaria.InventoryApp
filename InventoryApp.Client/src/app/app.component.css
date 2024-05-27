@@ -1,22 +1,28 @@
-﻿:host {
-    max-width: 1280px;
-    padding: 2rem;
-    text-align: center;
+#main-div {
+    margin: 0 auto;
+    width: 70%;
 }
-
-tr:nth-child(even) {
-    background: #F2F2F2;
+#main-div > h1 {
+  color: white;
+  background-color: black;
+  display: inline-block;
+  padding: 10px;
+  font-size: 3em;
 }
-
-tr:nth-child(odd) {
-    background: #FFF;
+#main-div > p {
+  color: white;
+  background-color: black;
+  display: inline-block;
+  padding: 10px;
+  font-size: 1.2rem;
 }
-
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+.button-pane * {
+    margin-right: 3px;
 }
-
-table {
+p-table thead {
+    background-color: red;
+}
+.table-container {
+    width: 100%;
     margin: 0 auto;
 }

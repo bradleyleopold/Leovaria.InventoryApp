@@ -27,6 +27,15 @@ builder.Services.AddSwaggerGen(options =>
             "InventoryApp Angular UI application to work."
     });
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CORS", x =>
+    {
+        x.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
@@ -49,5 +58,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
+
+app.UseCors("CORS");
 
 app.Run();

@@ -40,4 +40,23 @@ public class ItemsController : ControllerBase
         var insertedItem = await _itemService.InsertAsync(item);
         return insertedItem;
     }
+
+    /// <summary>
+    /// Modifies an existing item in the database.
+    /// </summary>
+    [HttpPut]
+    public async Task<ItemModel> Put([FromBody] ItemModel item)
+    {
+        var updatedItem = await _itemService.EditAsync(item);
+        return updatedItem;
+    }
+
+    /// <summary>
+    /// Deletes an item from the database based on <paramref name="itemId"/>.
+    /// </summary>
+    [HttpDelete("{id}")]
+    public async Task Delete([FromRoute] Guid id)
+    {
+        await _itemService.DeleteAsync(id);
+    }
 }

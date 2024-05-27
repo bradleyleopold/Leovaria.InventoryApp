@@ -1,0 +1,47 @@
+<p-dialog [header]="this.header" [modal]="true" [(visible)]="this.isVisible" [style]="{ width: '35rem' }" [closable]="false" >
+
+    <form [formGroup]="addEditItemFormGroup" (ngSubmit)="submit()">
+
+        @if (this.dialogMode === DialogMode.edit) {
+        <div class="flex align-items-center gap-3 mb-3 row">
+            <label for="id" class="font-semibold w-6rem">Id</label>
+            <input [readOnly]="true" pInputText id="id" class="flex-auto" autocomplete="off" formControlName="id" />
+        </div>
+        }
+
+        <div class="flex align-items-center gap-3 mb-3 row">
+            <label for="name" class="font-semibold w-6rem">Name *</label>
+            <input pInputText id="name" class="flex-auto" autocomplete="off" formControlName="name" />
+
+            @if (this.isSubmitted && this.addEditItemFormGroup.get('name')!.invalid) {
+            <div class="danger-text">Name required</div>
+            }
+
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3 row">
+            <label for="description" class="font-semibold w-6rem">Description *</label>
+            <input pInputText id="description" class="flex-auto" autocomplete="off" formControlName="description" />
+
+            @if (this.isSubmitted && this.addEditItemFormGroup.get('description')!.invalid) {
+            <div class="danger-text">Description required</div>
+            }
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3 row">
+            <label for="quantity" class="font-semibold w-6rem">Quantity *</label>
+            <p-inputNumber inputId="quantity" autocomplete="off" [showButtons]="true" [style]="{ width: '100%' }" [min]="0" formControlName="quantity" />
+
+            @if (this.isSubmitted && this.addEditItemFormGroup.get('quantity')!.invalid) {
+            <div class="danger-text">Quantity required</div>
+            }
+        </div>
+
+        <div class="button-pane button-set">
+            <p-button (click)="this.close()" title="Close dialog" [raised]="true" size="small" label="Close" severity="secondary" />
+            <p-button type="submit" title="Submit" [raised]="true" size="small" label="Submit" severity="primary" />
+        </div>
+
+    </form>
+
+</p-dialog>

@@ -17,4 +17,14 @@ public interface IItemService
     /// Inserts <paramref name="itemModel"/> into the database as an <see cref="Item"/>.
     /// </summary>
     public Task<ItemModel> InsertAsync(ItemModel itemModel);
+
+    /// <summary>
+    /// Modifies an existing record that correlates to <paramref name="itemModel"/>.
+    /// </summary>
+    public Task<ItemModel> EditAsync(ItemModel itemModel);
+
+    /// <summary>
+    /// Deletes the item with an ID of <paramref name="itemId"/>.
+    /// </summary>
+    public Task DeleteAsync(Guid itemId);
 }

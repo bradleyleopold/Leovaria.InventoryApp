@@ -1,0 +1,27 @@
+input, label {
+  width: 100%;
+}
+label {
+  display: block;
+  color: #eee;
+  font-size: 1.2em;
+}
+.button-set {
+  float: right;
+  padding-top: 12px;
+}
+.button-set > * {
+  margin-left: 3px;
+}
+.row {
+    padding: 5px 0;
+}
+p-inputnumber {
+    width: 100%;
+}
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
+.danger-text {
+    color: red;
+}
