@@ -25,38 +25,43 @@ public class ItemsController : ControllerBase
     /// Retrieves all items in the database.
     /// </summary>
     [HttpGet]
-    public async Task<List<ItemModel>> Get()
+    [ProducesResponseType(typeof(ActionResult<List<ItemModel>>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<List<ItemModel>>> Get()
     {
         var items = await _itemService.GetAllAsync();
-        return items;
+        return Ok(items);
     }
 
     /// <summary>
     /// Inserts an item into the database.
     /// </summary>
     [HttpPost]
-    public async Task<ItemModel> Post([FromBody] ItemModel item)
+    [ProducesResponseType(typeof(ActionResult<ItemModel>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<ItemModel>> Post([FromBody] ItemModel item)
     {
         var insertedItem = await _itemService.InsertAsync(item);
-        return insertedItem;
+        return Ok(insertedItem);
     }
 
     /// <summary>
     /// Modifies an existing item in the database.
     /// </summary>
     [HttpPut]
-    public async Task<ItemModel> Put([FromBody] ItemModel item)
+    [ProducesResponseType(typeof(ActionResult<ItemModel>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<ItemModel>> Put([FromBody] ItemModel item)
     {
         var updatedItem = await _itemService.EditAsync(item);
-        return updatedItem;
+        return Ok(updatedItem);
     }
 
     /// <summary>
-    /// Deletes an item from the database based on <paramref name="itemId"/>.
+    /// Deletes an item from the database based on <paramref name="id"/>.
     /// </summary>
     [HttpDelete("{id}")]
-    public async Task Delete([FromRoute] Guid id)
+    [ProducesResponseType(typeof(ActionResult), StatusCodes.Status200OK)]
+    public async Task<ActionResult> Delete([FromRoute] Guid id)
     {
         await _itemService.DeleteAsync(id);
+        return Ok();
     }
 }

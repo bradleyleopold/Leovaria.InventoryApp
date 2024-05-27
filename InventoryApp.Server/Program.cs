@@ -3,6 +3,7 @@ using InventoryApp.Common.Services;
 using InventoryApp.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -26,6 +27,11 @@ builder.Services.AddSwaggerGen(options =>
         Description = "Api is used for performing necessary operations in order for the " +
             "InventoryApp Angular UI application to work."
     });
+
+    // Set the comments path for the Swagger JSON and UI.
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
 });
 builder.Services.AddCors(options =>
 {
