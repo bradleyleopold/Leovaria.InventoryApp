@@ -19,9 +19,3 @@ label {
 p-inputnumber {
     width: 100%;
 }
-input.ng-invalid.ng-touched {
-  border-color: red;
-}
-.danger-text {
-    color: red;
-}

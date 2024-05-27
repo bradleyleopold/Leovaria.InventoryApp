@@ -23,3 +23,11 @@ html, body {
     padding: 0;
     margin: 0;
 }
+
+input.ng-invalid.ng-touched {
+  border-color: #e97984;
+}
+
+.danger-text {
+  color: #f19ea6;
+}
