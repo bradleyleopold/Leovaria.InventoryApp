@@ -5,7 +5,7 @@
 }
 <div id="top-pane-bar">
     <p>
-        <a href="https://github.com/bradleyleopold"> Project created by Bradley Leopold</a>
+        <a target="_blank" href="https://github.com/bradleyleopold"> Project created by Bradley Leopold</a>
     </p>
 </div>
 <div id="main-div">
@@ -28,7 +28,9 @@
 
         @if (this.displayTable) {
         <p-button (click)="openAddItemDialog()" icon="pi pi-plus" title="Add item" [raised]="true" size="small" label="Add item" />
-        <p-table [value]="itemsList" [tableStyle]="{ 'min-width': '20rem', 'width': '100%', 'margin-top': '3px', 'border': '1px solid black' }">
+        <p-table styleClass="p-datatable-striped"
+                 [value]="itemsList"
+                 [tableStyle]="{ 'min-width': '20rem', 'width': '100%', 'margin-top': '3px', 'border': '1px solid black' }">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Id</th>
