@@ -1,3 +1,8 @@
+@if (this.showSpinner) {
+<div class="progress-spinner">
+    <p-progressSpinner ariaLabel="loading" />
+</div>
+}
 <div id="top-pane-bar">
     <p>
         <a href="https://github.com/bradleyleopold"> Project created by Bradley Leopold</a>
@@ -14,14 +19,15 @@
     <p-toast />
     <p-confirmDialog />
 
-    <app-add-edit-item-modal
-        (itemAddedEvent)="itemAdded($event)"
-        (itemEditedEvent)="itemEdited($event)" />
+
+
+    <app-add-edit-item-modal (itemAddedEvent)="itemAdded($event)"
+                             (itemEditedEvent)="itemEdited($event)" />
 
     <div class="table-container">
-        <p-button (click)="openAddItemDialog()" icon="pi pi-plus" title="Add item" [raised]="true" size="small" label="Add item" />
 
         @if (this.displayTable) {
+        <p-button (click)="openAddItemDialog()" icon="pi pi-plus" title="Add item" [raised]="true" size="small" label="Add item" />
         <p-table [value]="itemsList" [tableStyle]="{ 'min-width': '20rem', 'width': '100%', 'margin-top': '3px', 'border': '1px solid black' }">
             <ng-template pTemplate="header">
                 <tr>
@@ -46,6 +52,7 @@
             </ng-template>
         </p-table>
         }
+
     </div>
 
 </div>

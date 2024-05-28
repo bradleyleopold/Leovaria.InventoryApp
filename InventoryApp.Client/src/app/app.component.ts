@@ -26,6 +26,11 @@ export class AppComponent implements OnInit {
   protected displayTable: boolean;
 
   /**
+   * Denotes whether the loading spinner is shown.
+   */
+  protected showSpinner: boolean;
+
+  /**
    * Dialog for adding/editing items.
    */
   @ViewChild(AddEditItemModalComponent) addEditItemModal!: AddEditItemModalComponent;
@@ -36,6 +41,7 @@ export class AppComponent implements OnInit {
   constructor(private itemService: ItemService, private confirmationService: ConfirmationService, private messageService: MessageService) {
     this.itemsList = [];
     this.displayTable = false;
+    this.showSpinner = true;
   }
 
   /**
@@ -45,6 +51,7 @@ export class AppComponent implements OnInit {
     this.itemService.getAll().subscribe(result => {
       this.itemsList = result;
       this.displayTable = true;
+      this.showSpinner = false;
     });
   }
 

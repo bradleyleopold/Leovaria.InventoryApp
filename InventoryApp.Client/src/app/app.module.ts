@@ -11,6 +11,7 @@ import { DialogModule } from 'primeng/dialog'
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AddEditItemModalComponent } from './components/modals/add-edit-item-modal/add-edit-item-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -32,7 +33,8 @@ import { InputTextModule } from 'primeng/inputtext';
     InputNumberModule,
     InputTextModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ProgressSpinnerModule
   ],
   providers: [
     ItemService,

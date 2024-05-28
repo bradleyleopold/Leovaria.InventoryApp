@@ -31,3 +31,28 @@ input.ng-invalid.ng-touched {
 .danger-text {
   color: #f19ea6;
 }
+
+.progress-spinner {
+  position: fixed;
+  z-index: 999;
+  height: 120px;
+  width: 120px;
+  overflow: visible;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+  /* Transparent Overlay */
+  .progress-spinner:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.53);
+  }
