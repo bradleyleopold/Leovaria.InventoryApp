@@ -26,3 +26,14 @@ p-table thead {
     width: 100%;
     margin: 0 auto;
 }
+#top-pane-bar {
+    background-color: black;
+    height: 40px;
+}
+#top-pane-bar > p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    line-height: 40px;
+    font-size: 1.0em;
+}
