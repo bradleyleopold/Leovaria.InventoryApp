@@ -101,6 +101,7 @@ export class AppComponent implements OnInit {
     // so that it doesn't show in the results.
     const deletedItemIndex = this.itemsList.findIndex(x => x.id === item.id);
     this.itemsList.splice(deletedItemIndex, 1);
+    this.itemsList = [...this.itemsList];
   }
 
   /**
@@ -108,7 +109,11 @@ export class AppComponent implements OnInit {
    * @param item Item to add.
    */
   protected itemAdded(item: Item) {
-    this.itemsList.push(item);
+
+    // We have to clone the list and add the item. Doing a
+    // simple .push() on the array would NOT trigger the
+    // PrimeNG table to issue a change detection.
+    this.itemsList = [...this.itemsList, item];
     this.messageService.add({ severity: 'info', summary: 'Add confirmed', detail: 'Record has been added' });
   }
 
@@ -119,6 +124,11 @@ export class AppComponent implements OnInit {
   protected itemEdited(item: Item) {
     const itemToUpdateIndex = this.itemsList.findIndex(x => x.id === item.id);
     this.itemsList[itemToUpdateIndex] = item;
+
+    // We have to clone the list and add the item. Doing a
+    // simple update of the list would NOT trigger the
+    // PrimeNG table to do a correct update.
+    this.itemsList = [...this.itemsList];
     this.messageService.add({ severity: 'info', summary: 'Update confirmed', detail: 'Record has been updated' });
   }
 }

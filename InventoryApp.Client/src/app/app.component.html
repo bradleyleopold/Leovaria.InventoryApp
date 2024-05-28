@@ -19,8 +19,6 @@
     <p-toast />
     <p-confirmDialog />
 
-
-
     <app-add-edit-item-modal (itemAddedEvent)="itemAdded($event)"
                              (itemEditedEvent)="itemEdited($event)" />
 
@@ -30,13 +28,16 @@
         <p-button (click)="openAddItemDialog()" icon="pi pi-plus" title="Add item" [raised]="true" size="small" label="Add item" />
         <p-table styleClass="p-datatable-striped"
                  [value]="itemsList"
-                 [tableStyle]="{ 'min-width': '20rem', 'width': '100%', 'margin-top': '3px', 'border': '1px solid black' }">
+                 [tableStyle]="{ 'min-width': '20rem', 'width': '100%', 'margin-top': '3px', 'border': '1px solid black' }"
+                 [paginator]="true"
+                 [rows]="5"
+                 [rowsPerPageOptions]="[5, 10, 25, 50]">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
+                    <th pSortableColumn="id">Id <p-sortIcon field="id" /></th>
+                    <th pSortableColumn="name">Name <p-sortIcon field="name" /></th>
+                    <th pSortableColumn="description">Description <p-sortIcon field="description" /></th>
+                    <th pSortableColumn="quantity">Quantity <p-sortIcon field="quantity" /></th>
                     <th>Actions</th>
                 </tr>
             </ng-template>
