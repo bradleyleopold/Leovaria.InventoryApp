@@ -11,6 +11,9 @@ namespace InventoryApp.Server.Controllers;
 [ApiController]
 public class ItemsController : ControllerBase
 {
+    /// <summary>
+    /// Service for performing operations for items.
+    /// </summary>
     private readonly IItemService _itemService;
 
     /// <summary>
@@ -26,10 +29,21 @@ public class ItemsController : ControllerBase
     /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(ActionResult<List<ItemModel>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ActionResult), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<List<ItemModel>>> Get()
     {
-        var items = await _itemService.GetAllAsync();
-        return Ok(items);
+        try
+        {
+            var items = await _itemService.GetAllAsync();
+            return Ok(items);
+        }
+        catch (Exception ex) 
+        {
+            // Normally you'd log the error, but for this project we will
+            // just write a line to the console. At least, for now.
+            Console.Write(ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, "An internal server error occurred.");
+        }
     }
 
     /// <summary>
@@ -37,10 +51,19 @@ public class ItemsController : ControllerBase
     /// </summary>
     [HttpPost]
     [ProducesResponseType(typeof(ActionResult<ItemModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ActionResult), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ItemModel>> Post([FromBody] ItemModel item)
     {
-        var insertedItem = await _itemService.InsertAsync(item);
-        return Ok(insertedItem);
+        try
+        {
+            var insertedItem = await _itemService.InsertAsync(item);
+            return Ok(insertedItem);
+        }
+        catch (Exception ex)
+        {
+            Console.Write(ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, "An internal server error occurred.");
+        }
     }
 
     /// <summary>
@@ -48,10 +71,25 @@ public class ItemsController : ControllerBase
     /// </summary>
     [HttpPut]
     [ProducesResponseType(typeof(ActionResult<ItemModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ActionResult), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ActionResult), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ItemModel>> Put([FromBody] ItemModel item)
     {
-        var updatedItem = await _itemService.EditAsync(item);
-        return Ok(updatedItem);
+        try
+        {
+            var updatedItem = await _itemService.EditAsync(item);
+            return Ok(updatedItem);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+            return StatusCode(StatusCodes.Status404NotFound, $"Item with ID {item.Id} not found.");
+        }
+        catch (Exception ex)
+        {
+            Console.Write(ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, "An internal server error occurred.");
+        }
     }
 
     /// <summary>
@@ -59,9 +97,24 @@ public class ItemsController : ControllerBase
     /// </summary>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(ActionResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ActionResult), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ActionResult), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> Delete([FromRoute] Guid id)
     {
-        await _itemService.DeleteAsync(id);
-        return Ok();
+        try
+        {
+            await _itemService.DeleteAsync(id);
+            return Ok();
+        }
+        catch (KeyNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+            return StatusCode(StatusCodes.Status404NotFound, $"Item with ID {id} not found.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, "An internal server error occurred.");
+        }
     }
 }

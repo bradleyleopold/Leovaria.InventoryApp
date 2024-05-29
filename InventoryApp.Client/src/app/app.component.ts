@@ -3,6 +3,7 @@ import { ItemService } from './services/item.service';
 import { Item } from './models/item';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AddEditItemModalComponent } from './components/modals/add-edit-item-modal/add-edit-item-modal.component';
+import { catchError, delay, retry } from 'rxjs';
 
 /**
  * Main component of the app used to display items, as well
@@ -48,11 +49,16 @@ export class AppComponent implements OnInit {
    * On component initialization.
    */
   ngOnInit() {
-    this.itemService.getAll().subscribe(result => {
-      this.itemsList = result;
-      this.displayTable = true;
-      this.showSpinner = false;
-    });
+    this.itemService.getAll()
+      .pipe(
+        retry(3),
+        delay(2000)
+      )
+      .subscribe(data => {
+        this.itemsList = data;
+        this.displayTable = true;
+        this.showSpinner = false;
+      });
   }
 
   /**
@@ -70,7 +76,6 @@ export class AppComponent implements OnInit {
       rejectIcon: "none",
       accept: () => {
         this._deleteItem(item);
-        this.messageService.add({ severity: 'info', summary: 'Deletion confirmed', detail: 'Record has been deleted' });
       }
     });
   }
@@ -95,13 +100,19 @@ export class AppComponent implements OnInit {
    * @param item Item to delete.
    */
   private _deleteItem(item: Item): void {
-    this.itemService.delete(item).subscribe();
-
-    // Remove the deleted item from the page list
-    // so that it doesn't show in the results.
-    const deletedItemIndex = this.itemsList.findIndex(x => x.id === item.id);
-    this.itemsList.splice(deletedItemIndex, 1);
-    this.itemsList = [...this.itemsList];
+    this.itemService.delete(item).pipe(
+      catchError(err => {
+        this.messageService.add({ severity: 'error', summary: 'Deletion failed', detail: `${err.error}` });
+        throw null;
+      }),
+    ).subscribe(result => {
+      // Remove the deleted item from the page list
+      // so that it doesn't show in the results.
+      const deletedItemIndex = this.itemsList.findIndex(x => x.id === item.id);
+      this.itemsList.splice(deletedItemIndex, 1);
+      this.itemsList = [...this.itemsList];
+      this.messageService.add({ severity: 'info', summary: 'Deletion confirmed', detail: 'Record has been deleted' });
+    });
   }
 
   /**

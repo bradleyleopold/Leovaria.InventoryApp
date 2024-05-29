@@ -55,9 +55,18 @@ public sealed class ItemService : IItemService
         var item = _itemMapper.Map(itemModel);
 
         var entity = await _context.FindAsync<Item>(item.Id);
-        entity!.Name = item.Name;
-        entity!.Description = item.Description;
-        entity!.Quantity = item.Quantity;
+
+        if (entity is null)
+        {
+            // If we got here, that means whatever ID was sent to
+            // us did not yield an item from the database. We can't
+            // update something that doesn't exist.
+            throw new KeyNotFoundException();
+        }
+
+        entity.Name = item.Name;
+        entity.Description = item.Description;
+        entity.Quantity = item.Quantity;
 
         await _context.SaveChangesAsync();
         var updatedItem = await _context.FindAsync<Item>(item.Id);
@@ -73,7 +82,11 @@ public sealed class ItemService : IItemService
 
         if (entity is null)
         {
-            ArgumentNullException.ThrowIfNull(entity);
+            // If we got here, that means whatever ID was sent to
+            // us did not yield an item from the database. Therefore,
+            // we return an exception since there's nothing to
+            // delete.
+            throw new KeyNotFoundException();
         }
 
         _context.Items.Entry(entity).State = EntityState.Deleted;

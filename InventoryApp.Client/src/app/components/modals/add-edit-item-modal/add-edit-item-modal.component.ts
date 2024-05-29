@@ -3,6 +3,8 @@ import { Item } from '../../../models/item';
 import { ItemService } from '../../../services/item.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogMode } from '../../../common/enums/dialog-mode-enum';
+import { catchError } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 /**
  * Modal for adding or editing an item.
@@ -62,7 +64,7 @@ export class AddEditItemModalComponent {
   /**
    * Component constructor.
    */
-  constructor(private formBuilder: FormBuilder, private itemService: ItemService) {
+  constructor(private formBuilder: FormBuilder, private itemService: ItemService, private messageService: MessageService) {
     this.isVisible = false;
     this.isSubmitted = false;
     this.header = '';
@@ -158,7 +160,12 @@ export class AddEditItemModalComponent {
    * Submits a POST request of the new item.
    */
   private _submitAdd() {
-    this.itemService.post(this.item).subscribe((result) => {
+    this.itemService.post(this.item).pipe(
+      catchError(err => {
+        this.messageService.add({ severity: 'error', summary: 'Add failed', detail: `${err.error}` });
+        throw null;
+      }),
+    ).subscribe((result) => {
       this.itemAddedEvent.emit(result);
       this.close();
     });
@@ -168,7 +175,12 @@ export class AddEditItemModalComponent {
    * Submits a PUT request of the modified item.
    */
   private _submitEdit() {
-    this.itemService.put(this.item).subscribe((result) => {
+    this.itemService.put(this.item).pipe(
+      catchError(err => {
+        this.messageService.add({ severity: 'error', summary: 'Update failed', detail: `${err.error}` });
+        throw null;
+      }),
+    ).subscribe((result) => {
       this.itemEditedEvent.emit(result);
       this.close();
     });
